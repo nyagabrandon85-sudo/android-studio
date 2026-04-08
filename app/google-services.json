@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "887926530864",
+    "project_id": "firefoxapp-13edb",
+    "storage_bucket": "firefoxapp-13edb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887926530864:android:55a26395d3a0473a91def5",
+        "android_client_info": {
+          "package_name": "com.deepseek.firstapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzjDrpYqsqvkO3XztLGdWkaadCgfXHHUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
