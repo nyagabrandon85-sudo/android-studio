@@ -1,5 +1,6 @@
 package com.deepseek.firstapp.screens.Homescreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -15,11 +16,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeCard(title: String,background: Color){
+fun HomeCard(title: String,background: Color,onClick:()-> Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp),
+            .height(150.dp)
+            .clickable{onClick()},
         colors = CardDefaults.cardColors(
             containerColor = background
         ),

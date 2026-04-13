@@ -3,6 +3,7 @@ package com.deepseek.firstapp.screens.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -37,17 +39,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.deepseek.firstapp.Navigation.ROUTE_REGISTER
 import com.deepseek.firstapp.R
+import com.deepseek.firstapp.data.AuthViewModel
 import java.util.concurrent.locks.Lock
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavController){
     Column(
         modifier= Modifier
             .fillMaxSize()
             .background(Color.Gray)
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ){
         Text(
             text="LOGIN",
@@ -56,6 +63,7 @@ fun LoginScreen(){
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Cursive
         )
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text="Already have an account? LOGIN",
             color = Color.Blue,
@@ -102,6 +110,7 @@ fun LoginScreen(){
             visualTransformation = PasswordVisualTransformation(),
         )
        Spacer(modifier= Modifier.height(20.dp))
+
         Button(
             onClick = {},
             modifier = Modifier.fillMaxWidth(),
@@ -112,7 +121,7 @@ fun LoginScreen(){
         ){
             Text("LOGIN", fontSize =24.sp)
         }
-        TextButton(onClick={}){
+        TextButton(onClick={navController.navigate(ROUTE_REGISTER)}){
             Text("Don't have an account? Register")
         }
     }
@@ -120,5 +129,5 @@ fun LoginScreen(){
 @Preview(showBackground = true)
 @Composable
 fun loginscreenpreview(){
- LoginScreen()
+ LoginScreen(rememberNavController())
 }
