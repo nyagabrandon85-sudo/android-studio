@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.data.AuthViewModel
 
 @Composable
@@ -142,5 +143,5 @@ fun RegisterScreen(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun registerpreview() {
-    RegisterScreen()
+    RegisterScreen(rememberNavController())
 }

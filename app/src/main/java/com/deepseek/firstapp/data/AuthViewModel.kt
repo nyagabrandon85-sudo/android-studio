@@ -3,6 +3,7 @@ package com.deepseek.firstapp.data
 import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavController
+import com.deepseek.firstapp.Navigation.ROUTE_DASHBOARD
 import com.deepseek.firstapp.Navigation.ROUTE_LOGIN
 import com.deepseek.firstapp.Navigation.ROUTE_REGISTER
 import com.deepseek.firstapp.Navigation.ROUTE_SPLASH
@@ -25,7 +26,7 @@ class AuthViewModel (var navController: NavController,var context: Context){
                 .addOnCompleteListener {
                     if(it.isSuccessful){
                         val userdata=
-                            User(fullname, email, password, userId = mAuth.currentUser!!.uid)
+                            User(fullname, email, password, userId = mAuth.currentUser!!.uid,"user")
                         val regRef= FirebaseDatabase.getInstance().getReference()
                             .child("Users/"+mAuth.currentUser!!.uid)
                         regRef.setValue(userdata).addOnCompleteListener {
@@ -46,14 +47,16 @@ class AuthViewModel (var navController: NavController,var context: Context){
 
     }
     //login function
-    fun login(email:String, password: String){
+    fun login(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful){
-                Toast.makeText(context, "Successfully logged in", Toast.LENGTH_LONG).show()
-            }else{
-                Toast.makeText(context, "Error loggin in ", Toast.LENGTH_LONG).show()
+            if (it.isSuccessful) {
+                Toast.makeText(context, "successfully login in", Toast.LENGTH_LONG).show()
+                navController.navigate(ROUTE_DASHBOARD)
+            } else {
+                Toast.makeText(context, "error logging in", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
     //logout function
     fun logout(){
@@ -61,8 +64,22 @@ class AuthViewModel (var navController: NavController,var context: Context){
         navController.navigate(ROUTE_LOGIN)
         {popUpTo(0)}
     }
-    fun getCurrentUserName(onResult: (String) -> Unit){
-        val
+    fun getCurrentUserName(onResult: (String) -> Unit) {
+        val userId = mAuth.currentUser?.uid
+
+        if (userId != null) {
+            val ref = FirebaseDatabase.getInstance()
+                .getReference("Users/$userId")
+
+            ref.get().addOnSuccessListener { snapshot ->
+                val name = snapshot.child("fullname").value.toString()
+                onResult(name)
+            }.addOnFailureListener {
+                onResult("User")
+            }
+        } else {
+            onResult("User")
+        }
     }
 
 }

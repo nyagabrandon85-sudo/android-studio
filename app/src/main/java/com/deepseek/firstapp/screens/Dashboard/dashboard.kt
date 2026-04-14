@@ -37,8 +37,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.Navigation.ROUTE_ADDPRODUCT
+import com.deepseek.firstapp.Navigation.ROUTE_MYINTENT
 import com.deepseek.firstapp.data.AuthViewModel
 import com.deepseek.firstapp.screens.Homescreen.HomeCard
 import com.google.rpc.context.AttributeContext
@@ -46,42 +48,45 @@ import com.google.rpc.context.AttributeContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(navController: NavController){
+fun DashboardScreen(navController: NavHostController){
+    val context= LocalContext.current
+    val myauth= AuthViewModel(navController,context)
     Scaffold(
-        //top bar
-
+        //topbar
         topBar = {
             TopAppBar(
-                title = {Text("Welcome to firstapp")},
+                title={Text("welcome to my app")},
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFFD0BCFF),
                     titleContentColor = Color.Blue
                 ),
                 actions = {
                     IconButton(onClick = {}) {
-                        Icon(
-                            Icons.Default.Settings,
-                            contentDescription = "icon"
-                        )
-                    }//LOGOUT
-                    IconButton(onClick = {
-                        myauth.logout()
-                    }) {
+                        Icon(Icons.Default.Settings,
+                            contentDescription = "icon")
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Person,
+                            contentDescription = "icon")
+                    }//logout icon
+                    IconButton(onClick = { myauth.logout()}) {
                         Icon(
                             Icons.Default.ExitToApp,
-                            contentDescription = "close icon")
+                            contentDescription = "close icon"
+                        )
                     }
+
                 }
             )
         },
         //bottom bar
         bottomBar = {
-            BottomAppBar(
-                containerColor = Color(0xFFD0BCFF),
-                contentColor = Color.Blue
-            ) {
-                Text("bottom bar")
-            }
+//            BottomAppBar(
+//                containerColor = Color(0xFFD0BCFF),
+//                contentColor = Color.Blue
+//            ) {
+//                Text("bottom bar")
+//            }
             NavigationBar() {
                 NavigationBarItem(
                     selected = true,
@@ -89,23 +94,23 @@ fun DashboardScreen(navController: NavController){
                     icon = {
                         Icon(Icons.Default.Home, contentDescription = "home icon")
                     },
-                    label = {Text("Home")}
+                    label = {Text("HOME")}
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = {},
                     icon = {
-                        Icon(Icons.Default.Person, contentDescription = "person icon")
-                    },
-                    label = {Text("Profile")}
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = {},
-                    icon = {
-                        Icon(Icons.Default.Settings, contentDescription = "settings icon")
+                        Icon(Icons.Default.Settings, contentDescription = "setting icon")
                     },
                     label = {Text("Settings")}
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {},
+                    icon = {
+                        Icon(Icons.Default.Person, contentDescription = "home icon")
+                    },
+                    label = {Text("profile")}
                 )
 
             }
@@ -116,43 +121,47 @@ fun DashboardScreen(navController: NavController){
                 Icon(Icons.Default.Add, contentDescription = "add icon")
             }
         }
-
-
-    ) { innerpadding->
+    ) {innerpadding ->
         Column(
             modifier = Modifier
                 .padding(innerpadding)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement =Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
 
-
         ) {
-            val context= LocalContext.current
-            val myauth= AuthViewModel(navController,context)
-            var username by remember { mutableStateOf("Loading") }
+
+            var username by remember { mutableStateOf("Loading...") }
             LaunchedEffect(Unit) {
-                myauth.getCurrentUsername{
-                    username=it
+                myauth.getCurrentUserName {
+                    username = it
                 }
             }
-            Text(text="Welcome, $username")
+            Text(text = "Welcome, $username ")
             Spacer(modifier = Modifier.height(16.dp))
-            Row(){
-                HomeCard("ADD PRODUCT", background = Color.Blue, onClick = {navController.navigate(
+            Row() {
+                HomeCard(title = "ADD Product", background = Color.Blue, onClick = {navController.navigate(
                     ROUTE_ADDPRODUCT
                 )})
-                HomeCard("UPDATE PRODUCT", background = Color.Blue, onClick = {})
+
+                HomeCard(title = "Update Product", background = Color.Magenta, onClick = {})
             }
             Row() {
-                HomeCard("DELETE PRODUCT", background = Color.Blue, onClick = {})
-                HomeCard("PRODUCT LIST", background = Color.Gray, onClick = {})
+                HomeCard(title = "Product list", background = Color.Gray, onClick = {})
+                HomeCard(title = "myintents", background = Color.Red, onClick = {navController.navigate(
+                    ROUTE_MYINTENT
+                )})
             }
+
         }
+
     }
+
 }
+
+
 @Preview(showBackground = true)
 @Composable
-fun dashboardscreenpreview(){
+fun dashboardpreview(){
     DashboardScreen(rememberNavController())
 }

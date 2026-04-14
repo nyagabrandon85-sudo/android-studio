@@ -5,4 +5,5 @@ data class User(
     var email:String="",
     var password:String="",
     var userId:String="",
+    var role: String="user"
 )

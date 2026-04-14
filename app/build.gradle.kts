@@ -68,4 +68,13 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.7")
     //coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    //cloudinary
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+    //retrofit
+    //retrofit core library
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    //converter factory for JSON (GSON)
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    //Optional
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

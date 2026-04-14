@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -114,7 +115,9 @@ fun AddProductScreen(navController: NavHostController){
             ) {
                 AsyncImage(
                     model=imageUri?:R.drawable.background,
-                    contentDescription = "product"
+                    contentDescription = "product",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(140.dp)
 
                 )
 
@@ -126,7 +129,7 @@ fun AddProductScreen(navController: NavHostController){
 
 
 
-
+            Spacer(modifier = Modifier.height(20.dp))
             Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
              Text("ADD PRODUCT")
             }
