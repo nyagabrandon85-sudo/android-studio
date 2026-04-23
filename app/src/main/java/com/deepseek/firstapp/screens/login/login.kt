@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.Navigation.ROUTE_REGISTER
 import com.deepseek.firstapp.R
@@ -47,7 +48,7 @@ import com.deepseek.firstapp.data.AuthViewModel
 import java.util.concurrent.locks.Lock
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(navController: NavHostController){
     Column(
         modifier= Modifier
             .fillMaxSize()
@@ -109,25 +110,29 @@ fun LoginScreen(navController: NavController){
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
         )
-       Spacer(modifier= Modifier.height(20.dp))
-
+        Spacer(modifier = Modifier.height(20.dp))
+        val context=LocalContext.current
+        val myauth= AuthViewModel(navController,context)
         Button(
-            onClick = {},
+            onClick = {myauth.login(email,password)},
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Magenta,
-                contentColor=Color.Blue,
+                contentColor = Color.Blue,
             )
-        ){
-            Text("LOGIN", fontSize =24.sp)
+        ) {
+            Text("LOGIN", fontSize = 24.sp)
         }
-        TextButton(onClick={navController.navigate(ROUTE_REGISTER)}){
-            Text("Don't have an account? Register")
+        TextButton(onClick = {navController.navigate(ROUTE_REGISTER)}) {
+            Text("Dont have an account? register")
         }
+
+
     }
+
 }
 @Preview(showBackground = true)
 @Composable
-fun loginscreenpreview(){
+fun LoginScreenPreview(){
  LoginScreen(rememberNavController())
 }

@@ -40,7 +40,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.Navigation.ROUTE_ADDPRODUCT
+import com.deepseek.firstapp.Navigation.ROUTE_LISTPRODUCT
 import com.deepseek.firstapp.Navigation.ROUTE_MYINTENT
+import com.deepseek.firstapp.Navigation.ROUTE_PROFILE
 import com.deepseek.firstapp.data.AuthViewModel
 import com.deepseek.firstapp.screens.Homescreen.HomeCard
 import com.google.rpc.context.AttributeContext
@@ -106,9 +108,11 @@ fun DashboardScreen(navController: NavHostController){
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = {},
+                    onClick = {
+                        navController.navigate(ROUTE_PROFILE)
+                    },
                     icon = {
-                        Icon(Icons.Default.Person, contentDescription = "home icon")
+                        Icon(Icons.Default.Person, contentDescription = "profile icon")
                     },
                     label = {Text("profile")}
                 )
@@ -144,14 +148,20 @@ fun DashboardScreen(navController: NavHostController){
                     ROUTE_ADDPRODUCT
                 )})
 
-                HomeCard(title = "Update Product", background = Color.Magenta, onClick = {})
+
+                HomeCard(title = "Product list", background = Color.Gray, onClick = {navController.navigate(
+                    ROUTE_LISTPRODUCT
+                )})
             }
             Row() {
-                HomeCard(title = "Product list", background = Color.Gray, onClick = {})
+                HomeCard(title = "Profile", background = Color.Gray, onClick = {navController.navigate(
+                    ROUTE_PROFILE
+                )})
                 HomeCard(title = "myintents", background = Color.Red, onClick = {navController.navigate(
                     ROUTE_MYINTENT
                 )})
             }
+
 
         }
 
@@ -160,8 +170,10 @@ fun DashboardScreen(navController: NavHostController){
 }
 
 
+
+
 @Preview(showBackground = true)
 @Composable
-fun dashboardpreview(){
+fun DashboardPreview(){
     DashboardScreen(rememberNavController())
 }

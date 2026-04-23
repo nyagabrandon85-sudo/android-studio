@@ -71,6 +71,6 @@ fun FirstScreen () {
 }
 @Preview(showBackground = true)
 @Composable
-fun firstcreenpreview() {
+fun FirstScreenPreview() {
     FirstScreen()
 }

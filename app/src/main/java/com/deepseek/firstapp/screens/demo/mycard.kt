@@ -43,6 +43,6 @@ fun MyCardExample(){
 }
 @Preview
 @Composable
-fun cardpreview(){
+fun CardScreenPreview(){
     MyCardExample()
 }

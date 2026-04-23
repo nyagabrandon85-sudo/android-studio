@@ -31,114 +31,132 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.deepseek.firstapp.R
+import com.deepseek.firstapp.data.ProductViewModel
+import  com.deepseek.firstapp.R
 
-//AddProduct
+
+//AddProduct screen
 //scaffold-topbar
 //Text-addproduct
-//textfield-name, price, description, imagepicker
+//textfield-name,price,description,imagepicker
 //button-addproduct
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductScreen(navController: NavHostController){
+fun AddProductScreen(navcontroller: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("ADD PRODUCT") },
-                colors = TopAppBarDefaults.topAppBarColors(
+                title = {Text("ADD Product")},
+                colors= TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Cyan
                 )
             )
         }
     )
-    {innerpadding ->
+    { innerpadding ->
         Column(
             modifier = Modifier
                 .padding(innerpadding)
                 .fillMaxSize()
                 .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             var productName by remember { mutableStateOf("") }
-            var price by remember { mutableStateOf("") }
+            var  price by remember { mutableStateOf("") }
             var description by remember { mutableStateOf("") }
             var imageUri by remember { mutableStateOf<Uri?>(null) }
-            //image picker launcher
+            //imagepicker launcher
             val imagePickerLauncher= rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.GetContent()
-            ){
-                uri: Uri? ->
+            ) {
+                    uri: Uri? ->
                 imageUri=uri
             }
             Text(
-                text = "ADD PRODUCT",
-                fontSize = 26.sp,
+                text="Add product",
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color=Color.Magenta
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier= Modifier.height(20.dp))
+
             OutlinedTextField(
                 value = productName,
                 onValueChange = {productName=it},
-                label = {Text("Enter product name")},
+                label = {Text(" enter product name")},
                 modifier = Modifier.fillMaxWidth(),
             )
+            Spacer(modifier= Modifier.height(20.dp))
             OutlinedTextField(
                 value = price,
                 onValueChange = {price=it},
-                label = {Text("Enter product price")},
+                label = {Text(" enter product price")},
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
+            Spacer(modifier= Modifier.height(20.dp))
             OutlinedTextField(
                 value = description,
                 onValueChange = {description=it},
-                label = {Text("Enter product description")},
+                label = {Text(" enter product description")},
                 modifier = Modifier.fillMaxWidth(),
             )
-            Spacer(modifier = Modifier.height(20.dp))
-            //product image picker+preview
+            Spacer(modifier= Modifier.height(20.dp))
+            //product image picker+ preview
             Card(
-                shape = CircleShape,
+                shape= CircleShape,
                 modifier = Modifier
                     .size(140.dp)
                     .clickable{imagePickerLauncher.launch("image/*")}
             ) {
                 AsyncImage(
-                    model=imageUri?:R.drawable.background,
+                    model=imageUri ?: R.drawable.company,
                     contentDescription = "product",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(140.dp)
-
+                    modifier=Modifier.size(140.dp)
                 )
-
+            }
+            OutlinedButton(onClick ={imagePickerLauncher.launch("image/*")}) {
+                Text("choose image")
 
             }
-            OutlinedButton(onClick = {imagePickerLauncher.launch("image/*")}) {
-                Text("Choose image")
-            }
+            Spacer(modifier= Modifier.height(20.dp))
+            //
+            val context=LocalContext.current
+            val  myproductviewmodel= ProductViewModel(navcontroller, context)
+            Button(onClick = {
+                myproductviewmodel.uploadProduct(
+                    imageUri = imageUri,
+                    name = productName,
+                    price = price,
+                    description = description
+                )
+                //clear textfields
+                productName=""
+                price=""
+                description=""
+            }, modifier = Modifier.fillMaxWidth()) {
+                Text("ADD PRODUCT")
 
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
-             Text("ADD PRODUCT")
             }
         }
 
     }
+
 }
+
 @Preview(showBackground = true)
 @Composable
-fun productpreview(){
+fun ProductPreview(){
     AddProductScreen(rememberNavController())
 }

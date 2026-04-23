@@ -47,7 +47,7 @@ fun IntentScreen(navController: NavHostController){
 }
 @Preview(showBackground = true)
 @Composable
-fun intentpreview(){
+fun IntentScreenPreview(){
     IntentScreen(rememberNavController())
 }
 
