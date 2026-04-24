@@ -1,5 +1,6 @@
 package com.deepseek.firstapp.screens.demo
 
+
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
@@ -16,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun IntentScreen(navController: NavHostController){
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,14 +36,21 @@ fun IntentScreen(navController: NavHostController){
             val intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             context.startActivity(intent)
         }
+        ) {Text("Open Camera")
 
-        ){Text("Open camera")}
+        }
+        Button(onClick = {
+            val intent= Intent(Intent.ACTION_VIEW, Uri.parse("https://www.emobilis.ac.ke")
+            )
+            context.startActivity(intent)
+
+        }) {
+            Text("Open Website")
+        }
+
+
     }
-    Button(onClick = {
-        val intent=Intent(Intent.ACTION_VIEW,Uri.parse(("https://www.emobilis.com")))
-    }) {
-        Text("Open website")
-    }
+
 
 }
 @Preview(showBackground = true)

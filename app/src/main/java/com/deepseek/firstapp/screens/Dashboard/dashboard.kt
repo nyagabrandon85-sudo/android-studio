@@ -1,5 +1,6 @@
 package com.deepseek.firstapp.screens.Dashboard
 
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,11 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.BottomAppBar
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -36,23 +38,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.Navigation.ROUTE_ADDPRODUCT
+import com.deepseek.firstapp.Navigation.ROUTE_DASHBOARD
+import com.deepseek.firstapp.Navigation.ROUTE_DEMOCAROUSEL
 import com.deepseek.firstapp.Navigation.ROUTE_LISTPRODUCT
 import com.deepseek.firstapp.Navigation.ROUTE_MYINTENT
 import com.deepseek.firstapp.Navigation.ROUTE_PROFILE
+import com.deepseek.firstapp.Navigation.ROUTE_USERDASHBOARD
 import com.deepseek.firstapp.data.AuthViewModel
 import com.deepseek.firstapp.screens.Homescreen.HomeCard
-import com.google.rpc.context.AttributeContext
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController: NavHostController){
     val context= LocalContext.current
-    val myauth= AuthViewModel(navController,context)
+    val myauth= AuthViewModel(navController, context)
     Scaffold(
         //topbar
         topBar = {
@@ -108,11 +112,9 @@ fun DashboardScreen(navController: NavHostController){
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = {
-                        navController.navigate(ROUTE_PROFILE)
-                    },
+                    onClick = {navController.navigate(ROUTE_PROFILE)},
                     icon = {
-                        Icon(Icons.Default.Person, contentDescription = "profile icon")
+                        Icon(Icons.Default.Person, contentDescription = "home icon")
                     },
                     label = {Text("profile")}
                 )
@@ -154,23 +156,29 @@ fun DashboardScreen(navController: NavHostController){
                 )})
             }
             Row() {
-                HomeCard(title = "Profile", background = Color.Gray, onClick = {navController.navigate(
-                    ROUTE_PROFILE
+                HomeCard(title = "MY carousel", background = Color.Gray, onClick = {navController.navigate(
+                    ROUTE_DEMOCAROUSEL
                 )})
                 HomeCard(title = "myintents", background = Color.Red, onClick = {navController.navigate(
                     ROUTE_MYINTENT
                 )})
             }
+            Row() {
+                HomeCard(title = "USERDASHBOARD", background = Color.Gray, onClick = {
+                    navController.navigate(
+                        ROUTE_USERDASHBOARD
+                    )
+                })
 
+
+
+            }
 
         }
 
     }
 
 }
-
-
-
 
 @Preview(showBackground = true)
 @Composable

@@ -27,7 +27,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -50,10 +49,10 @@ fun ProductListScreen(navController: NavHostController){
     ) {
             innerpadding ->
         var context= LocalContext.current
-        var myproductviewmodel= ProductViewModel(navController,context)
+        var myproductviewmodel= ProductViewModel(navController, context)
 
         val product= remember { mutableStateOf(Product("","","","","")) }
-        val products=remember { mutableStateListOf<Product >()}
+        val products=remember { mutableStateListOf<Product>()}
 
         //fetch products
         LaunchedEffect(Unit) {
@@ -88,12 +87,10 @@ fun ProductListScreen(navController: NavHostController){
                     Text(text =item.description)
 
                     Spacer(modifier = Modifier.height(10.dp))
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-
                         //  Delete
                         Text(
                             text = "Delete",
@@ -103,7 +100,6 @@ fun ProductListScreen(navController: NavHostController){
                                     myproductviewmodel.deleteProduct(item.id)
                                 }
                         )
-
                         // ✏ Update
                         Text(
                             text = "Update",

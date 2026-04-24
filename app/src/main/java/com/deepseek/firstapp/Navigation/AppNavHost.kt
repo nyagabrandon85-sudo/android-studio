@@ -12,12 +12,14 @@ import androidx.navigation.compose.rememberNavController
 import com.deepseek.firstapp.screens.Dashboard.DashboardScreen
 import com.deepseek.firstapp.screens.Splashscreen.SplashScreen
 import com.deepseek.firstapp.screens.demo.IntentScreen
+import com.deepseek.firstapp.screens.demo.democarousel
 import com.deepseek.firstapp.screens.login.LoginScreen
 import com.deepseek.firstapp.screens.product.AddProductScreen
 import com.deepseek.firstapp.screens.product.ProductListScreen
 import com.deepseek.firstapp.screens.product.UpdateProductScreen
 import com.deepseek.firstapp.screens.profile.ProfileScreen
 import com.deepseek.firstapp.screens.register.RegisterScreen
+import com.deepseek.firstapp.screens.user.UserDashboard
 
 
 @Composable
@@ -59,11 +61,19 @@ fun AppNavHost(
         composable(ROUTE_PROFILE) {
             ProfileScreen(navController)
         }
+        composable(ROUTE_USERDASHBOARD) {
+            UserDashboard(navController)
+        }
+        composable(ROUTE_DEMOCAROUSEL){
+            democarousel(navController)
+        }
+
 
 
     }
 
 }
+
 
 
 
